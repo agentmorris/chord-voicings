@@ -58,7 +58,7 @@ When you view a song, the app:
 
 ## Examples
 
-In each of these examples, the lyrics, chords, and performance notes were already there; this app uses AI to add the "chord challenge" and the suggested chord voicings to satisfy that challenge.
+In each of these examples, the lyrics, chords, and performance notes were already there; this app uses AI to add the "chord challenge" (chosen from a list of AI-generated challenges) and to dynamically generate the suggested chord voicings to satisfy that challenge.
 
 <img src="images/challenge_00_heaven.jpg" width=800><br/><hr>
 <img src="images/challenge_01_timeofmylife.jpg" width=800><br/><hr>
