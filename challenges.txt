@@ -1,0 +1,62 @@
+Play all chords as triads using only the top three strings.
+Play all chords as triads using only the D, G, and B strings.
+Play all chords as triads using only the bottom three strings.
+Voice every chord using Drop 2 voicings on the top four strings.
+Voice every chord using Drop 3 voicings on the 6th, 4th, 3rd, and 2nd strings.
+Play chords using only the A, D, and G strings.
+Limit every chord shape to exactly three notes.
+Omit the root note from every chord voicing.
+Omit the third from every chord, playing them as sus2 or sus4 chords.
+Play all chords without the fifth.
+Play only shell voicings consisting of the root, 3rd, and 7th.
+Voice chords such that the interval between the lowest and highest note is less than one octave.
+Voice chords such that the interval between the lowest and highest note is more than two octaves.
+Convert all major triads to major 7th chords.
+Convert all major triads to major 9th chords.
+Convert all minor triads to minor 9th chords.
+Convert all minor triads to minor 11th chords.
+Add a 13th to every dominant 7th chord.
+Replace every dominant 7th with an Altered Dominant containing a b9 or #9.
+Replace every major chord with a 6/9 voicing.
+Add a #11 to every major chord to create a Lydian sound.
+Play every chord with an added 9th, omitting the root.
+Replace every V chord with its tritone substitution.
+Precede every minor chord with its secondary dominant.
+Precede every chord with a diminished 7th chord a semitone below it.
+Insert a backdoor dominant (bVII7) leading into every instance of the tonic chord.
+Reharmonize one chord per phrase to be non-diatonic.
+Voice chords so the top note moves upwards in diatonic steps for an entire phrase.
+Voice chords so the top note descends chromatically throughout the progression.
+Voice chords so the bass note moves upwards diatonically.
+Voice chords so the bass note moves downwards diatonically.
+Use inversions to keep the bass note on the 5th string for the entire song.
+Force every chord to be played between the 5th and 9th frets.
+Alternate between a closed triad voicing and an extended voicing every other bar.
+Use a constant structure approach by moving the exact same chord shape to different roots regardless of the key.
+Play all chords as slash chords where the bass note is the 3rd of the chord.
+Play all chords as slash chords where the bass note is the 5th of the chord.
+Add 9ths to every other chord.
+About once per verse, add an interesting passing chord with at least one non-diatonic note.
+Voice every chord without using your index finger.
+Play triads where the notes are on non-adjacent strings.
+Ensure every chord voicing includes more than one octave between the lowest note and the next-highest note.
+Voice chords using at least three notes located on adjacent strings within a 3-fret span.
+Choose a 4-fret box and voice every chord without leaving that box.
+Play every chord using only two notes that represent the essential harmony.
+Replace every dominant 7th chord with a 7#9 voicing.
+Replace every minor 7th chord with a minor 6th voicing.
+Replace every major 7th chord with a major 6th voicing.
+Replace every major chord with a sus4 voicing, resolving to the major triad on the last beat.
+Play only the 3rd and 7th of every chord.
+Keep the highest note of your voicing exactly the same for at least 4 bars.
+Keep a note on the G or D string constant between chord changes wherever possible.
+If the root note moves up, the top note of your voicing must move down.
+Alternate strictly between 1st inversion and 2nd inversion voicings.
+Re-voice the progression so the bass notes move in half-steps as often as possible.
+Voice chords higher up the neck on the top three strings to mimic a mandolin.
+Every time the chord changes, jump the voicing to a different octave than the previous one.
+Voice every chord using only the 6th, 4th, and 3rd strings.
+Play all chords as add 9 chords.
+Substitute every minor chord with a minor 7b5.
+Play the bass note of the chord on the low E string and the rest of the voicing on the top three strings.
+Replace every minor chord with a minor(maj7) chord.

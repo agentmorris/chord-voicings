@@ -1,0 +1,116 @@
+I am an amateur guitar player, and one of the things I want to work on is being more creative in my use of chord voicings and chord extensions.  I don't like doing drills, I prefer playing along with music I like.  I maintain a songbook of chords and lyrics for all the songs I know. Typically when I'm using my songbook, I'm looking at a page like this one:
+
+https://awesomesongbook.com/dan_songbook/dan_songbook_split/s_abbadancingqueen.html
+
+That's the chords and lyrics for a single song.  I'm usually looking at this in a desktop browser, and there is almost always lots of whitespace available on the right.
+
+Here's what I want to achieve:
+
+I want to have an application - which for now can be something that runs locally, i.e. I'm not worried yet about deploying this - that allows me to provide a link like the one above (or the local file equivalent), and renders a version of the page, but I want to inject a "chord selection challenge".  Here are some examples of the challenges I want to give myself:
+
+* Play all the chords without the fifth
+* Add 9ths to every other chord
+* Play all the chords as triads using on the 2nd, 3rd, and 5th strings
+* Voice the chords such that there's always a note on the sixth string, and that note walks up the fretboard making minimal steps, jumping back to the bottom of the neck when you get to the 12th fret.
+* About once per verse, add an interesting passing chord with at least one non-diatonic note.
+
+Challenges should represent chord *voicing* challenges (e.g. "play all chords with the third on the bottom"), chord *extension* challenges (e.g., when and how to add appropriate 7th and 9ths), and chord *insertion and substitution* challenges (e.g. "insert a passing chord every time the next chord is the root").
+
+Each time I ask for a page, the app should choose a challenge (either from a preselected list or using AI, more on this later), and also use AI (specifically Gemini 3.0 Pro) to show me a suggested "solution" in the form of recommended chord voicings that satisfy this challenge.  I.e., the application should submit a prompt to Gemini that provides the challenge and a list of chords, and asks for a list of specific chord fingerings/voicings back (with some way of communicating to the client which lyrics/chords each voicing corresponds to).  Voicings may not always be required for every chord, e.g. if a verse in a song is just "C G" eight times, and the particular chord pattern the AI is suggesting only wants one pattern for all eight times, the prompt to Gemini should suggest that it's OK to "skip" some chords to simplify the output.
+
+The application should then render those voicings to images that are displayed in approximately the correct vertical locations on the right side of the page, i.e. approximately inline with the lyrics and chords on the left.  I believe there are OSS libraries to generate guitar chord voicing images, don't rely on an LLM for the image generation.
+
+For now, we don't have to dynamically generate the challenge.  Instead, I want you to do a one-time query to Gemini 3.0 Pro to create a list of about fifty challenges like the ones above, and store those in a .txt or .md file that the application can access (and that I can also edit manually).
+
+I made a quick prototype image of what a song looks like on the page with and without chord voicings... the chord voicings aren't quite right, and the layout isn't *quite* right, but it's close; I think this communicates the general idea of what I'm trying to do.  A song rendered without chord images:
+
+g:\temp\dancing_queen.png
+
+Now with chord images:
+
+g:\temp\dancing_queen_with_chords.jpeg
+
+We are on a Windows PC, and the app only needs to run on Windows right now, though if for some reason it's easier to make it work in Linux, I can use WSL.
+
+There is a gemini key that the application can access in:
+
+g:\temp\gemini_key.txt.
+
+I store all the lyrics and chords in chordpro format; they are all in .txt files in:
+
+c:\git\songbook
+
+For example, the page I linked to above corresponds to this file:
+
+c:\git\songbook\Abba - Dancing Queen.txt
+
+I don't think you'll need to refer back to the original .txt files, but I wanted you let you know they are available in case there's something that is difficult to parse from the HTML.
+
+When I create that songbook, I create it via a series of programmatic operations that turn those chordpro files into HTML.  A local copy of the songbook is available in:
+
+C:\git\songbook\output\dan_songbook\dan_songbook_split
+
+For example, the local .html file corresponding to the link I sent above is:
+
+C:\git\songbook\output\dan_songbook\dan_songbook_split\s_abbadancingqueen.html
+
+It will likely be helpful for you to be able to view rendered pages as we work on this project, so confirm know that you have appropriate tools available to view rendered Web pages, or ask me to install appropriate MCP tools.
+
+I prefer to work in Python, though it's not a requirement.  Asssuming you work in Python, you are in a conda environment, install anything you need, but track requirements in a requirements.txt file.
+
+It's not a requirement, but if you want to generate mockups of what the final experience might look like before writing code, I would be interested in reviewing those mockups.  It's also OK to just skip to writing code if you feel like you understand the task well enough.
+
+Always err on the side of doing extensive searching and asking me lots of questions, I am not in a hurry.
+
+If I've gotten any of the file paths wrong in this prompt, e.g. if I give you a folder or file that doesn't exist, don't try to work around it or guess, check with me.
+
+Ask me at least three clarifying questions before proceeding.
+
+--
+
+Prompt for new challenges
+
+I am building an app that challenges guitar players to voice chords in interesting ways.  I want to make a list of "challenges" they can apply to a song, where they're asked to choose chords or voicings with unusual constraints.  They will be looking at the lyrics and chords for the song, but not the melody, so we can't suggest challenges like "make the top note follow the melody", but we *can* suggest challenges like "add a m7b5 chord in every verse".
+
+The remainder of this message is the challenges I have so far; give me 50 more.
+
+Play all chords as triads using only the top three strings.
+Play all chords as triads using only the D, G, and B strings.
+Play all chords as triads using only the bottom three strings.
+Voice every chord using Drop 2 voicings on the top four strings.
+Voice every chord using Drop 3 voicings on the 6th, 4th, 3rd, and 2nd strings.
+Play chords using only the A, D, and G strings.
+Limit every chord shape to exactly three notes.
+Omit the root note from every chord voicing.
+Omit the third from every chord, playing them as sus2 or sus4 chords.
+Play all chords without the fifth.
+Voice every chord using stacked fourths (quartal harmony) wherever possible.
+Play only shell voicings consisting of the Root, 3rd, and 7th.
+Voice chords such that the interval between the lowest and highest note is less than one octave.
+Voice chords such that the interval between the lowest and highest note is more than two octaves.
+Convert all major triads to major 7th chords.
+Convert all major triads to major 9th chords.
+Convert all minor triads to Minor 9th chords.
+Convert all minor triads to Minor 11th chords.
+Add a 13th to every Dominant 7th chord.
+Replace every Dominant 7th with an Altered Dominant containing a b9 or #9.
+Replace every major chord with a 6/9 voicing.
+Add a #11 to every major chord to create a Lydian sound.
+Play every chord with an added 9th, omitting the root.
+Replace every V chord with its tritone substitution.
+Precede every minor chord with its secondary dominant.
+Precede every chord with a diminished 7th chord a semitone below it.
+Insert a backdoor dominant (bVII7) leading into every instance of the tonic chord.
+Reharmonize one chord per phrase to be non-diatonic.
+Voice chords so the top note moves upwards in diatonic steps for an entire phrase.
+Voice chords so the top note descends chromatically throughout the progression.
+Voice chords so the bass note moves upwards diatonically.
+Voice chords so the bass note moves downwards diatonically.
+Use inversions to keep the bass note on the 5th string for the entire song.
+Force every chord to be played between the 5th and 9th frets.
+Alternate between a closed triad voicing and an extended voicing every other bar.
+Use a constant structure approach by moving the exact same chord shape to different roots regardless of the key.
+Play all chords as slash chords where the bass note is the 3rd of the chord.
+Play all chords as slash chords where the bass note is the 5th of the chord.
+Add 9ths to every other chord.
+About once per verse, add an interesting passing chord with at least one non-diatonic note.
