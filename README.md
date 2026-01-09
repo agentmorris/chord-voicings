@@ -33,8 +33,8 @@ When you view a song, the app:
 
 *   Python 3.12+
 *   Dependencies listed in `requirements.txt` (`flask`, `matplotlib`, `google-genai`, `beautifulsoup4`, `requests`).
-*   A Google Gemini API key located at `g:\temp\gemini_key.txt`.
-*   Songbook source files located at `C:\git\songbook\output\dan_songbook\dan_songbook_split`.
+*   A Google Gemini API key read from a local file (defaults to `g:\temp\gemini_key.txt`).
+*   Songbook source files read from a local folder (defaults to `C:\git\songbook\output\dan_songbook\dan_songbook_split`).
 
 ## Setup & usage
 
