@@ -9,14 +9,13 @@ CHALLENGES_FILE = "challenges.txt"
 
 app = Flask(__name__, static_folder=SONGBOOK_DIR)
 
-# Load challenges
-challenges = []
-if os.path.exists(CHALLENGES_FILE):
-    with open(CHALLENGES_FILE, 'r', encoding='utf-8') as f:
-        challenges = [line.strip() for line in f if line.strip()]
-else:
-    print("Warning: challenges.txt not found. Run generate_challenges.py first.")
-    challenges = ["Play all chords as triads"] # Fallback
+def get_challenges():
+    if os.path.exists(CHALLENGES_FILE):
+        with open(CHALLENGES_FILE, 'r', encoding='utf-8') as f:
+            return [line.strip() for line in f if line.strip()]
+    else:
+        print("Warning: challenges.txt not found. Run generate_challenges.py first.")
+        return ["Play all chords as triads"] # Fallback
 
 @app.route('/')
 def index():
@@ -32,6 +31,7 @@ def serve_file(filename):
     # If it's a song file (s_*.html), process it
     if filename.startswith('s_') and filename.endswith('.html'):
         # Pick a random challenge
+        challenges = get_challenges()
         challenge = random.choice(challenges)
         print(f"Serving {filename} with challenge: {challenge}")
         
@@ -62,5 +62,5 @@ def serve_file(filename):
 
 if __name__ == '__main__':
     print(f"Serving songbook from {SONGBOOK_DIR}")
-    print(f"Loaded {len(challenges)} challenges")
+    print(f"Loaded {len(get_challenges())} challenges")
     app.run(debug=True, port=5000)

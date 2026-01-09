@@ -16,15 +16,12 @@ def process_song(html_content, challenge):
     chord_rows = soup.find_all('tr', class_='ch')
     
     # Collect all chords and their locations
-    # Location: (row_obj, chord_text)
-    # We want to process chords in order.
+    # We want to process chords in order, but tracking their row index.
     
-    all_chords = []
-    row_chords_map = {} # Map row_id (or index) to list of indices in all_chords
+    all_chords_data = [] # List of dicts: {'row': row_index, 'chord': text}
     
     for i, row in enumerate(chord_rows):
         cells = row.find_all('td')
-        row_indices = []
         for cell in cells:
             text = clean_chord(cell.get_text())
             if text:
@@ -32,29 +29,34 @@ def process_song(html_content, challenge):
                 # Some might be empty/arrows/etc.
                 # Heuristic: Chords usually start with A-G.
                 if re.match(r'^[A-G]', text):
-                    all_chords.append(text)
-                    row_indices.append(len(all_chords) - 1)
+                    all_chords_data.append({'row': i, 'chord': text})
         
-        if row_indices:
-            row_chords_map[i] = row_indices
-            
-    if not all_chords:
+    if not all_chords_data:
         return str(soup)
         
     # Get voicings from Gemini
-    # We pass the list of chords.
-    print(f"getting voicings for {len(all_chords)} chords")
-    voicings = gemini_client.get_voicings(challenge, all_chords)
+    # We pass the list of chords with their row indices.
+    print(f"getting voicings for {len(all_chords_data)} chords")
+    voicings = gemini_client.get_voicings(challenge, all_chords_data)
     
     if not voicings:
         print("No voicings returned")
         return str(soup)
+    
+    # Group voicings by row index for easy lookup
+    voicings_by_row = {}
+    for v in voicings:
+        row_idx = v.get('row')
+        if row_idx is not None:
+            if row_idx not in voicings_by_row:
+                voicings_by_row[row_idx] = []
+            voicings_by_row[row_idx].append(v)
         
     # Generate images and inject
     # We iterate through the rows we found.
     for i, row in enumerate(chord_rows):
-        if i in row_chords_map:
-            indices = row_chords_map[i]
+        if i in voicings_by_row:
+            row_voicings = voicings_by_row[i]
             
             # Create a new cell for this row
             new_cell = soup.new_tag('td')
@@ -65,26 +67,24 @@ def process_song(html_content, challenge):
             container_div = soup.new_tag('div')
             container_div['style'] = 'display: flex; gap: 10px;'
             
-            for chord_idx in indices:
-                if chord_idx < len(voicings):
-                    v_data = voicings[chord_idx]
+            for v_data in row_voicings:
+                fingering = v_data.get('fingering', 'SKIP')
+                if fingering == 'SKIP':
+                    continue
                     
-                    fingering = v_data.get('fingering', 'SKIP')
-                    if fingering == 'SKIP':
-                        continue
-                        
-                    chord_name = v_data.get('chord', all_chords[chord_idx])
-                    start_fret = v_data.get('starting_fret', 1)
-                    
-                    # Generate image
-                    img_base64 = chord_generator.generate_chord_image(fingering, chord_name, start_fret)
-                    
-                    if img_base64:
-                        img_tag = soup.new_tag('img')
-                        img_tag['src'] = f"data:image/png;base64,{img_base64}"
-                        img_tag['alt'] = f"{chord_name} voicing"
-                        img_tag['style'] = 'height: 100px; width: auto;' # Scale down a bit
-                        container_div.append(img_tag)
+                # Use chord_display_name if available, otherwise fall back to 'chord'
+                chord_name = v_data.get('chord_display_name', v_data.get('chord', '?'))
+                start_fret = v_data.get('starting_fret', 1)
+                
+                # Generate image
+                img_base64 = chord_generator.generate_chord_image(fingering, chord_name, start_fret)
+                
+                if img_base64:
+                    img_tag = soup.new_tag('img')
+                    img_tag['src'] = f"data:image/png;base64,{img_base64}"
+                    img_tag['alt'] = f"{chord_name} voicing"
+                    img_tag['style'] = 'height: 100px; width: auto;' # Scale down a bit
+                    container_div.append(img_tag)
             
             if container_div.contents:
                 new_cell.append(container_div)

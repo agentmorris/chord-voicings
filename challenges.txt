@@ -21,7 +21,6 @@ Replace every major chord with a 6/9 voicing.
 Add a #11 to every major chord to create a Lydian sound.
 Play every chord with an added 9th, omitting the root.
 Replace every V chord with its tritone substitution.
-Precede every minor chord with its secondary dominant.
 Precede every chord with a diminished 7th chord a semitone below it.
 Insert a backdoor dominant (bVII7) leading into every instance of the tonic chord.
 Reharmonize one chord per phrase to be non-diatonic.
@@ -53,7 +52,6 @@ Keep a note on the G or D string constant between chord changes wherever possibl
 If the root note moves up, the top note of your voicing must move down.
 Alternate strictly between 1st inversion and 2nd inversion voicings.
 Re-voice the progression so the bass notes move in half-steps as often as possible.
-Voice chords higher up the neck on the top three strings to mimic a mandolin.
 Every time the chord changes, jump the voicing to a different octave than the previous one.
 Voice every chord using only the 6th, 4th, and 3rd strings.
 Play all chords as add 9 chords.
